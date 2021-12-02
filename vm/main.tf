@@ -118,6 +118,12 @@ output "tls_private_key" {
     sensitive = true
 }
 
+resource "local_file" "private_key" {
+  content         = tls_private_key.example_ssh.private_key_pem
+  filename        = "myvmkey.pem"
+  file_permission = "0600"
+}
+
 # Create virtual machine
 resource "azurerm_linux_virtual_machine" "myterraformvm" {
     name                  = "myVMde"
